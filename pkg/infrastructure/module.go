@@ -7,5 +7,6 @@ var Module = fx.Module(
 	"infrastructure",
 	fx.Options(
 		fx.Provide(NewRouter),
+		fx.Provide(NewDatabase),
 	),
 )

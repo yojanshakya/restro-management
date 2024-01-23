@@ -1,0 +1,5 @@
+development:
+  dialect: mysql
+  # todo use env vars
+  datasource: root:secret@tcp(localhost:33068)/restro-management?parseTime=true
+  dir: migrations
