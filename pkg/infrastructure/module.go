@@ -7,6 +7,11 @@ var Module = fx.Module(
 	"infrastructure",
 	fx.Options(
 		fx.Provide(NewRouter),
-		fx.Provide(NewDatabase),
+		fx.Provide(NewDatabase), 
+		fx.Provide(NewAWSConfig), 
+		fx.Provide(NewCognitoClient), 
+		fx.Provide(NewS3Client), 
+		fx.Provide(NewS3PresignClient), 
+		fx.Provide(NewS3Uploader),
 	),
 )

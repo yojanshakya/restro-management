@@ -8,5 +8,5 @@ import (
 var Module = fx.Module(
 	"services",
 	fx.Options(
-	),
+		fx.Provide(NewS3BucketService)),
 )
