@@ -1,6 +1,10 @@
 package menu
 
-import "github.com/gin-gonic/gin"
+import (
+	"Restro/models"
+
+	"github.com/gin-gonic/gin"
+)
 
 type MenuController struct {
 	service *MenuService
@@ -13,8 +17,10 @@ func NewMenuController(service *MenuService) *MenuController{
 }
 
 func (menuController *MenuController) GetAllMenus(ctx *gin.Context){
-	menuController.service.GetAllMenu()
+	var menuItems []models.MenuItem
+	menuController.service.GetAllMenu(&menuItems)
+
 	ctx.JSON(200, gin.H{
-		"message": "Hello World peace out",
+		"data": menuItems,
 	})
 }

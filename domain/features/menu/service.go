@@ -2,22 +2,23 @@ package menu
 
 import (
 	"Restro/models"
-	"fmt"
 )
 
-
 type MenuService struct {
-	// db infrastructure.Database
+	menuRepo *MenuRepository
 }
 
-func NewMenuService() *MenuService{
-	return &MenuService{}
+func NewMenuService(menuRepo *MenuRepository) *MenuService{
+	return &MenuService{
+		menuRepo: menuRepo,
+	}
 }	
 
-func (s *MenuService) GetAllMenu() {
-	menuItem := []models.MenuItem{}
+func (s *MenuService) GetAllMenu(menuItems *[]models.MenuItem) ( *[]models.MenuItem) {
+	s.menuRepo.GetAllMenu(menuItems)
+	return menuItems
+}
 
-	// s.db.Find(&menuItem)
-
-	fmt.Println(menuItem)
+func (s *MenuService) CreateMenu(menuItem *models.MenuItem) (error){
+	return s.menuRepo.CreateMenu(menuItem)
 }

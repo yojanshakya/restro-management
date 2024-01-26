@@ -6,6 +6,7 @@ var Module = fx.Module("menu",
 	fx.Options(
 		fx.Provide(NewMenuController),
 		fx.Provide(NewMenuService),
+		fx.Provide(NewMenuRepository),
 		fx.Invoke(NewRoute),
 	),
 )

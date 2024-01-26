@@ -20,6 +20,5 @@ func NewRoute(router *infrastructure.Router, menuController *MenuController) *Me
 
 func (r *MenuRoute) RegisterRoutes() {
 	r.groupRouter = r.router.Group("/menu")
-	r.RegisterRoutes()
 	r.groupRouter.GET("/all", r.menuController.GetAllMenus)
 }
