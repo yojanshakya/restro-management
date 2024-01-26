@@ -2,6 +2,7 @@ package menu
 
 import (
 	"Restro/models"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -41,10 +42,34 @@ func (menuController *MenuController) CreateMenu(ctx *gin.Context){
 		return
 	}
 
-	ctx.JSON(200, gin.H{
+	// todo handle errors
+	ctx.JSON(500, gin.H{
 		"data": gin.H{
 			"status": "error",
 			"message": err.Error(),
 		},
+	})
+}
+
+func (menuController *MenuController) GetMenuById(ctx *gin.Context){
+
+	// todo handle errors
+	id, _ := strconv.Atoi(ctx.Param("id"))
+
+	menuItem := models.MenuItem{}
+	err := menuController.service.GetMenuById(id, &menuItem)
+
+	if err != nil {
+		ctx.JSON(500, gin.H{
+			"data": gin.H{
+				"status": "error",
+				"message": err.Error(),
+			},
+		})
+		return
+	}
+
+	ctx.JSON(200, gin.H{
+		"data": menuItem,
 	})
 }

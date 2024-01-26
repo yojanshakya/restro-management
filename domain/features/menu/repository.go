@@ -24,3 +24,8 @@ func (r *MenuRepository) CreateMenu(menuItem *models.MenuItem) (error){
 	fmt.Printf("%+v\n", result)
 	return result.Error
 }
+
+func (r *MenuRepository) GetMenuById(id int, menuItem *models.MenuItem) (error){
+	result := r.db.Preload("Category").First(&menuItem, id)
+	return result.Error
+}	
