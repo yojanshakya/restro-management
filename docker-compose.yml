@@ -16,6 +16,9 @@ services:
       - seccomp:unconfined
     extra_hosts:
       - "yc-api.local:192.168.64.2"
+    depends_on:
+      database:
+        condition: service_healthy
 
   database:
     build:
@@ -41,3 +44,6 @@ services:
       interval: "1s"
       timeout: "10s"
       retries: 10
+
+volumes:
+  restro-management-db:
