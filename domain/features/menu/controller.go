@@ -80,3 +80,26 @@ func (menuController *MenuController) GetMenuById(ctx *gin.Context){
 		"data": menuItem,
 	})
 }
+
+func (menuController *MenuController) DeleteMenuById(ctx *gin.Context){
+	// todo handle errors
+	id, _ := strconv.Atoi(ctx.Param("id"))
+
+	err := menuController.service.DeleteMenuById(id)
+
+	if(err != nil){
+		ctx.JSON(500, gin.H{
+			"data": gin.H{
+				"status": "error",
+				"message": err.Error(),
+			},
+		})
+		return
+	}	
+
+	ctx.JSON(200, gin.H{
+		"data": gin.H{
+			"success" : true,
+		},
+	})
+}

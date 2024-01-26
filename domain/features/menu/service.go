@@ -26,3 +26,7 @@ func (s *MenuService) CreateMenu(menuItem *models.MenuItem) (error){
 func (s *MenuService) GetMenuById(id int, menuItem *models.MenuItem) (error){
 	return s.menuRepo.GetMenuById(id, menuItem)
 }
+
+func (s *MenuService) DeleteMenuById(id int) (error){
+	return s.menuRepo.DeleteMenuById(id)
+}

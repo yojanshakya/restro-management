@@ -6,8 +6,6 @@ import (
 	"Restro/pkg/infrastructure"
 	"Restro/pkg/utils"
 	"fmt"
-
-	"gorm.io/gorm"
 )
 
 type MenuRepository struct{
@@ -36,10 +34,8 @@ func (r *MenuRepository) GetMenuById(id int, menuItem *models.MenuItem) (error){
 	return result.Error
 }	
 
-func (r *MenuRepository) WithTrx(trxHandle *gorm.DB) *MenuRepository {
-	if trxHandle != nil {
-		r.Logger.Debug("using WithTrx as trxHandle is not nil")
-		r.DB = trxHandle
-	}
-	return r
+func (r *MenuRepository) DeleteMenuById(id int) (error){
+	result := r.Delete(&models.MenuItem{}, id)
+	return result.Error
 }
+
