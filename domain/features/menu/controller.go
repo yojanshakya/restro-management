@@ -2,6 +2,8 @@ package menu
 
 import (
 	"Restro/models"
+	"Restro/pkg/utils"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -17,11 +19,17 @@ func NewMenuController(service *MenuService) *MenuController{
 }
 
 func (menuController *MenuController) GetAllMenus(ctx *gin.Context){
+	pagination := utils.BuildPagination(ctx)
+
 	var menuItems []models.MenuItem
-	menuController.service.GetAllMenu(&menuItems)
+	var count int64
+	menuController.service.GetAllMenu(&menuItems, &count,  &pagination)
 
 	ctx.JSON(200, gin.H{
-		"data": menuItems,
+		"data": gin.H{
+			"menuItems"	: menuItems,
+			"total": count,
+		},
 	})
 }
 
@@ -41,10 +49,57 @@ func (menuController *MenuController) CreateMenu(ctx *gin.Context){
 		return
 	}
 
-	ctx.JSON(200, gin.H{
+	// todo handle errors
+	ctx.JSON(500, gin.H{
 		"data": gin.H{
 			"status": "error",
 			"message": err.Error(),
+		},
+	})
+}
+
+func (menuController *MenuController) GetMenuById(ctx *gin.Context){
+
+	// todo handle errors
+	id, _ := strconv.Atoi(ctx.Param("id"))
+
+	menuItem := models.MenuItem{}
+	err := menuController.service.GetMenuById(id, &menuItem)
+
+	if err != nil {
+		ctx.JSON(500, gin.H{
+			"data": gin.H{
+				"status": "error",
+				"message": err.Error(),
+			},
+		})
+		return
+	}
+
+	ctx.JSON(200, gin.H{
+		"data": menuItem,
+	})
+}
+
+func (menuController *MenuController) DeleteMenuById(ctx *gin.Context){
+	// todo handle errors
+	id, _ := strconv.Atoi(ctx.Param("id"))
+
+	err := menuController.service.DeleteMenuById(id)
+
+	if(err != nil){
+		ctx.JSON(500, gin.H{
+			"data": gin.H{
+				"status": "error",
+				"message": err.Error(),
+			},
+		})
+		return
+	}	
+
+	ctx.JSON(200, gin.H{
+		"data": gin.H{
+			"success" : true,
 		},
 	})
 }
