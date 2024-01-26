@@ -2,6 +2,7 @@ package menu
 
 import (
 	"Restro/models"
+	"Restro/pkg/utils"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -18,11 +19,17 @@ func NewMenuController(service *MenuService) *MenuController{
 }
 
 func (menuController *MenuController) GetAllMenus(ctx *gin.Context){
+	pagination := utils.BuildPagination(ctx)
+
 	var menuItems []models.MenuItem
-	menuController.service.GetAllMenu(&menuItems)
+	var count int64
+	menuController.service.GetAllMenu(&menuItems, &count,  &pagination)
 
 	ctx.JSON(200, gin.H{
-		"data": menuItems,
+		"data": gin.H{
+			"menuItems"	: menuItems,
+			"total": count,
+		},
 	})
 }
 
