@@ -14,9 +14,8 @@ func NewMenuService(menuRepo *MenuRepository) *MenuService{
 	}
 }	
 
-func (s *MenuService) GetAllMenu(menuItems *[]models.MenuItem) ( *[]models.MenuItem) {
-	s.menuRepo.GetAllMenu(menuItems)
-	return menuItems
+func (s *MenuService) GetAllMenu(menuItems *[]models.MenuItem) (error) {
+	return s.menuRepo.GetAllMenu(menuItems)
 }
 
 func (s *MenuService) CreateMenu(menuItem *models.MenuItem) (error){

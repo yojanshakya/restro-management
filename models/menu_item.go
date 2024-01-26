@@ -1,5 +1,6 @@
 package models
 
+// todo json validation
 type MenuItem struct {
 	ID int `gorm:"primaryKey" json:"id"`
 	Description string `gorm:"column:description" json:"description"`

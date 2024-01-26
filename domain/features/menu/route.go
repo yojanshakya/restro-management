@@ -21,4 +21,5 @@ func NewRoute(router *infrastructure.Router, menuController *MenuController) *Me
 func (r *MenuRoute) RegisterRoutes() {
 	r.groupRouter = r.router.Group("/menu")
 	r.groupRouter.GET("/all", r.menuController.GetAllMenus)
+	r.groupRouter.POST("/create", r.menuController.CreateMenu)
 }

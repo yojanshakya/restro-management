@@ -24,3 +24,27 @@ func (menuController *MenuController) GetAllMenus(ctx *gin.Context){
 		"data": menuItems,
 	})
 }
+
+func (menuController *MenuController) CreateMenu(ctx *gin.Context){
+	var menuItem models.MenuItem
+	ctx.BindJSON(&menuItem)
+	
+	err := menuController.service.CreateMenu(&menuItem)
+	
+	// todo send saved data back to FE
+	if err == nil{
+		ctx.JSON(200, gin.H{
+			"data": gin.H{
+				"status": "success",
+			},
+		})
+		return
+	}
+
+	ctx.JSON(200, gin.H{
+		"data": gin.H{
+			"status": "error",
+			"message": err.Error(),
+		},
+	})
+}
